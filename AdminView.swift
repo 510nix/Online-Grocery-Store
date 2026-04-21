@@ -1,34 +1,34 @@
 import SwiftUI
-import FirebaseAuth
 
 struct AdminView: View {
-    
     @EnvironmentObject var authService: AuthService
     @State private var selectedTab = 0
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            
             AdminProductsView()
                 .tabItem {
-                    Image(systemName: "cube.box")
-                    Text("Products")
+                    Label("Shop", systemImage: "square.grid.2x2.fill")
                 }
                 .tag(0)
             
             AdminOrdersView()
                 .tabItem {
-                    Image(systemName: "doc.text")
-                    Text("Orders")
+                    Label("Orders", systemImage: "shippingbox.fill")
                 }
                 .tag(1)
         }
-        .navigationTitle("Admin Panel")
-        .navigationBarItems(trailing:
-            Button("Logout") {
-                authService.logout()
+        .accentColor(.green)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    authService.logout()
+                }) {
+                    Text("Logout")
+                        .font(.subheadline)
+                        .foregroundColor(.red)
+                }
             }
-            .foregroundColor(.red)
-        )
+        }
     }
 }
